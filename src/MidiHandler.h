@@ -2,6 +2,7 @@
 #define MIDIHANDLER_H
 
 #include <midifile/MidiFile.h>
+#include <midifile/MidiEvent.h>
 #include <iostream>
 
 class MidiHandler

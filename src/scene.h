@@ -27,7 +27,7 @@ private:
     MidiHandler *midihandler;
 public:
     Scene(int, int, DrawHandler*, sf::RenderWindow*);
-    void update();
+    void update(const sf::Time&);
     void fireBullet(int, int, int, int);
 };
 

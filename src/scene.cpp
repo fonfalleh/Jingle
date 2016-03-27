@@ -20,9 +20,10 @@ Scene::Scene(int width, int height, DrawHandler* dhandler, sf::RenderWindow* win
 
     //Midi testing
     midihandler = new MidiHandler("52_Sangerhilsen.MID");
+    
 }
 
-void Scene::update()
+void Scene::update(const sf::Time & currentTime)
 {
     //Testing
     /*for(GOsIT it = objs.begin(); it != objs.end(); ++it) //TODO Iterate instead of increment?
