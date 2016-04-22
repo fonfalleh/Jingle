@@ -26,12 +26,14 @@ private:
     std::queue<Bullet*> passiveBullets;
     void addObject(GameObject& o);
     int framecounter;
-    
     MidiHandler *midihandler;
+    std::vector<int> frameList;
 public:
     Scene(int, int, DrawHandler*, sf::RenderWindow*);
     void update(const sf::Time&);
     void fireBullet(int, int, int, int); //TODO lols
+    void addFrameToList();
+
 };
 
 #endif // SCENE_H

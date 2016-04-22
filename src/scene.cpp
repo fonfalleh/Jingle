@@ -4,7 +4,7 @@ typedef std::list<GameObject*>::iterator GOsIT;
 
 
 Scene::Scene(int width, int height, DrawHandler* dhandler, sf::RenderWindow* win):
-framecounter(0)
+framecounter(0), frameList()
 {
     window = win; // TODO: IS THIS EVEN SANE? // Eh. Probably; are pointers.
     drawer = dhandler;
@@ -21,7 +21,7 @@ framecounter(0)
 
     //Midi testing
     midihandler = new MidiHandler("52_Sangerhilsen.MID");
-    
+    frameList.push_back(1337);
 }
 
 void Scene::update(const sf::Time & currentTime)
@@ -45,6 +45,7 @@ void Scene::update(const sf::Time & currentTime)
                     std::cout<<"Hello"<<std::endl; //TODO Collisions are checked here.b
         }
     }
+    std::cout<<"frame: " << framecounter << '\t' << "last pop: " << frameList.back() << std::endl;
     ++framecounter;
 }
 void Scene::fireBullet(int x, int y, int vx, int vy)
@@ -64,4 +65,8 @@ void Scene::fireBullet(int x, int y, int vx, int vy)
 
 void Scene::addObject(GameObject& o){
     
+}
+
+void Scene::addFrameToList(){
+    frameList.push_back(framecounter);
 }
