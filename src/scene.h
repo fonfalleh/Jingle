@@ -11,7 +11,9 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <queue>
+
 #include "MidiHandler.h"
+#include <midifile/MidiEventList.h>
 
 class Scene
 {
@@ -23,12 +25,13 @@ private:
     std::list<Bullet*> activeBullets;
     std::queue<Bullet*> passiveBullets;
     void addObject(GameObject& o);
+    int framecounter;
     
     MidiHandler *midihandler;
 public:
     Scene(int, int, DrawHandler*, sf::RenderWindow*);
     void update(const sf::Time&);
-    void fireBullet(int, int, int, int);
+    void fireBullet(int, int, int, int); //TODO lols
 };
 
 #endif // SCENE_H

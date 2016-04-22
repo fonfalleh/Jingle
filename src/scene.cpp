@@ -3,7 +3,8 @@
 typedef std::list<GameObject*>::iterator GOsIT;
 
 
-Scene::Scene(int width, int height, DrawHandler* dhandler, sf::RenderWindow* win)
+Scene::Scene(int width, int height, DrawHandler* dhandler, sf::RenderWindow* win):
+framecounter(0)
 {
     window = win; // TODO: IS THIS EVEN SANE? // Eh. Probably; are pointers.
     drawer = dhandler;
@@ -44,6 +45,7 @@ void Scene::update(const sf::Time & currentTime)
                     std::cout<<"Hello"<<std::endl; //TODO Collisions are checked here.b
         }
     }
+    ++framecounter;
 }
 void Scene::fireBullet(int x, int y, int vx, int vy)
 {
