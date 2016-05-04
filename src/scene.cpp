@@ -1,10 +1,10 @@
 #include "scene.h"
 
-typedef std::list<GameObject*>::iterator GOsIT;
+typedef std::list<GameObject*>::iterator GOsIT; // this... is awkward
 
-
+// So yeah, here's a lot of ugly initialization
 Scene::Scene(int width, int height, DrawHandler* dhandler, sf::RenderWindow* win):
-framecounter(0), frameList()
+framecounter(0), frameList(), playback(false)
 {
     window = win; // TODO: IS THIS EVEN SANE? // Eh. Probably; are pointers.
     drawer = dhandler;
@@ -21,7 +21,7 @@ framecounter(0), frameList()
 
     //Midi testing
     midihandler = new MidiHandler("52_Sangerhilsen.MID");
-    frameList.push_back(1337);
+    frameList.push_back(0);
 }
 
 void Scene::update(const sf::Time & currentTime)
@@ -45,6 +45,12 @@ void Scene::update(const sf::Time & currentTime)
                     std::cout<<"Hello"<<std::endl; //TODO Collisions are checked here.b
         }
     }
+    // Midistuffs TODO WIP
+    if(playback && *currentElem+ offset >= framecounter){
+        fireBullet(150,200,0,-1);
+        if(currentElem  != frameList.end())
+            currentElem++;
+    }
     std::cout<<"frame: " << framecounter << '\t' << "last pop: " << frameList.back() << std::endl;
     ++framecounter;
 }
@@ -67,6 +73,15 @@ void Scene::addObject(GameObject& o){
     
 }
 
+// Midi-stuffs
 void Scene::addFrameToList(){
     frameList.push_back(framecounter);
+}
+void Scene::startPlayback()
+{
+    if(!playback){
+        playback = true;
+        currentElem = frameList.begin();
+        offset = framecounter;
+    }
 }

@@ -9,7 +9,8 @@ MidiHandler::MidiHandler(const string& filename):
         //midifile.joinTracks();
         std::cout<<midifile.getEventCount(0)<<std::endl;
         
-        int high = 0, low = 100; // Keeping track of the range of the midi sequence. Ugly magic numbers atm.
+        int high = 0; 
+        int low = 100; // Keeping track of the range of the midi sequence. Ugly magic numbers atm.
         int track = 1;
         for (int i=0; i<midifile[track].size(); i++) {
             if (!midifile[track][i].isNoteOn()) { // Only check messages that are "note-ons"

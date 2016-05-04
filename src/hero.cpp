@@ -29,6 +29,8 @@ void Hero::readInput(Scene& s)
         fire(s);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         s.addFrameToList();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        s.startPlayback();
     //std::cout<<"X: " << getX() << " Y: " << getY() << std::endl;
 }
 
