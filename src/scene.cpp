@@ -31,25 +31,29 @@ void Scene::update(const sf::Time & currentTime)
     { // Oh god why, this is terrible
         (*it)->update(this);
     }*/
+    // Runs the update function for all Game Objects
     for(auto o : objs)
     {
         o->update(*this);
     }
     drawer->doStuff(window);
-
-    for(GOsIT it = objs.begin(); it != objs.end(); ++it)
+/**
+    for(GOsIT it = objs.begin(); it != objs.end(); ++it) //Really, really terrible collision check
     {
         for(GOsIT innit = objs.begin(); innit != objs.end(); ++innit)
         {
             if(*it != *innit && Utils::CollideChk(**it, **innit))
-                    std::cout<<"Hello"<<std::endl; //TODO Collisions are checked here.b
+                    std::cout<<"Hello"<<std::endl; //TODO Collisions are checked here.
         }
     }
+     **/
     // Midistuffs TODO WIP
-    if(playback && *currentElem+ offset >= framecounter){
+    if(playback && *currentElem+ offset <= framecounter){
         fireBullet(150,200,0,-1);
         if(currentElem  != frameList.end())
             currentElem++;
+        if (currentElem == frameList.end())
+            playback = false;
     }
     std::cout<<"frame: " << framecounter << '\t' << "last pop: " << frameList.back() << std::endl;
     ++framecounter;
