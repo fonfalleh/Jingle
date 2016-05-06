@@ -4,13 +4,13 @@ typedef std::list<GameObject*>::iterator GOsIT; // this... is awkward
 
 // So yeah, here's a lot of ugly initialization
 Scene::Scene(int width, int height, DrawHandler* dhandler, sf::RenderWindow* win):
-framecounter(0), frameList(), playback(false)
+framecounter{0}, frameList(), playback{false}
 {
     window = win; // TODO: IS THIS EVEN SANE? // Eh. Probably; are pointers.
     drawer = dhandler;
-    hero = new Hero(width/2, height/2);
+    hero = new Hero{width/2, height/2};
     drawer->addGO(hero, 19, 5);
-    Bullet *bullet = new Bullet(10, 10);
+    Bullet *bullet = new Bullet{10, 10};
     drawer->addGO(bullet, 12, 17);
 
     objs.push_back(hero);
@@ -38,6 +38,7 @@ void Scene::update(const sf::Time & currentTime)
     }
     drawer->doStuff(window);
 /**
+ // TODO: Make not-terrible collision checking. Different pools for different kinds of collisions. Bullets don't care much for bullets etc.
     for(GOsIT it = objs.begin(); it != objs.end(); ++it) //Really, really terrible collision check
     {
         for(GOsIT innit = objs.begin(); innit != objs.end(); ++innit)
@@ -55,7 +56,8 @@ void Scene::update(const sf::Time & currentTime)
         if (currentElem == frameList.end())
             playback = false;
     }
-    std::cout<<"frame: " << framecounter << '\t' << "last pop: " << frameList.back() << std::endl;
+    // Prints current frame and last frame recorded into framelist
+    //std::cout<<"frame: " << framecounter << '\t' << "last pop: " << frameList.back() << std::endl;
     ++framecounter;
 }
 void Scene::fireBullet(int x, int y, int vx, int vy)

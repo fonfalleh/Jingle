@@ -1,7 +1,7 @@
 #include "hero.h"
 #include "scene.h"
 Hero::Hero(int x, int y):
-    GameObject(x,y,5), fireCD(fireCDFrames)
+    GameObject{x,y,5}, fireCD{fireCDFrames}
 {
 }
 //Hero::~Hero(){0;}

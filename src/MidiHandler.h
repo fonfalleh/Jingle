@@ -4,6 +4,7 @@
 #include <midifile/MidiFile.h>
 #include <midifile/MidiEvent.h>
 #include <iostream>
+#include <list>
 
 class MidiHandler
 {
@@ -12,6 +13,7 @@ public:
     ~MidiHandler();
 private:
     MidiFile midifile;
+    std::list<int> frameList; // List of interesting midievents
 
 };
 
