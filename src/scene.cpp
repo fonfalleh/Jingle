@@ -3,8 +3,7 @@
 typedef std::list<GameObject*>::iterator GOsIT; // this... is awkward
 
 // So yeah, here's a lot of ugly initialization
-Scene::Scene(int width, int height, DrawHandler* dhandler, sf::RenderWindow* win):
-framecounter{0}, frameList(), playback{false}
+Scene::Scene(int width, int height, DrawHandler* dhandler, SDL_Window* win)
 {
     window = win; // TODO: IS THIS EVEN SANE? // Eh. Probably; are pointers.
     drawer = dhandler;
@@ -18,13 +17,9 @@ framecounter{0}, frameList(), playback{false}
     Baddy *baddy = new Baddy(10, 10, 5);
     drawer->addGO(baddy, 22, 5);
     objs.push_back(baddy);
-
-    //Midi testing
-    midihandler = new MidiHandler("52_Sangerhilsen.MID");
-    frameList.push_back(0);
 }
 
-void Scene::update(const sf::Time & currentTime)
+void Scene::update(const int & currentTime)
 {
     //Testing
     /*for(GOsIT it = objs.begin(); it != objs.end(); ++it) //TODO Iterate instead of increment?
@@ -48,17 +43,6 @@ void Scene::update(const sf::Time & currentTime)
         }
     }
      **/
-    // Midistuffs TODO WIP
-    if(playback && *currentElem+ offset <= framecounter){
-        fireBullet(150,200,0,-1);
-        if(currentElem  != frameList.end())
-            currentElem++;
-        if (currentElem == frameList.end())
-            playback = false;
-    }
-    // Prints current frame and last frame recorded into framelist
-    //std::cout<<"frame: " << framecounter << '\t' << "last pop: " << frameList.back() << std::endl;
-    ++framecounter;
 }
 void Scene::fireBullet(int x, int y, int vx, int vy)
 {
@@ -77,17 +61,4 @@ void Scene::fireBullet(int x, int y, int vx, int vy)
 
 void Scene::addObject(GameObject& o){
     
-}
-
-// Midi-stuffs
-void Scene::addFrameToList(){
-    frameList.push_back(framecounter);
-}
-void Scene::startPlayback()
-{
-    if(!playback){
-        playback = true;
-        currentElem = frameList.begin();
-        offset = framecounter;
-    }
 }

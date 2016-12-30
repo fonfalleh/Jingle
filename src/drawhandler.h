@@ -1,24 +1,24 @@
 #ifndef DRAWHANDLER_H
 #define DRAWHANDLER_H
 
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <list>
 #include "gameobject.h"
+#include "SDL2/SDL.h"
 
 
 class DrawHandler
 {
 public:
     void addGO(GameObject*, int, int);
-    sf::Texture texture;
+    SDL_Surface texture;
     DrawHandler();
-    void doStuff(sf::RenderWindow *);
+    void doStuff(SDL_Window *);
 private:
     struct GOS
     {
         GameObject *g;
-        sf::Sprite *s;
+        //sf::Sprite *s;
     };
     int scale;
     std::list<GOS> objects;

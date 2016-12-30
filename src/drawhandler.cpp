@@ -4,14 +4,17 @@ DrawHandler::DrawHandler()
 {
     objects.clear();
     scale = 23;
+    /*
     if (!texture.loadFromFile("spritesheet_t.png"))
         std::cout<<"NO SPRITESHEET!"<<std::endl;
     else
         std::cout<<"SPRITESHEET!"<<std::endl;
+    */
 }
 //SPRITES ARE 21x21 w 1px border. 23x+1, 23y+1 to get sprite. //+2?
-void DrawHandler::doStuff(sf::RenderWindow *w)
+void DrawHandler::doStuff(SDL_Window *w)
 {
+    /*
     w->clear();
     for(std::list<GOS>::iterator it = objects.begin();it != objects.end();it++)
     { // Oh god why, this is terrible //More was than is, but still.
@@ -21,13 +24,14 @@ void DrawHandler::doStuff(sf::RenderWindow *w)
     }
     //TODO Draw all the things in different layers/lists.
     w->display();
+     */
 }
 
 void DrawHandler::addGO(GameObject* go, int x, int y)
 {   // Magic numbers: SpriteScale: 21px, center: (10,10)
     GOS gos;
 
-    sf::Sprite *s = new sf::Sprite();
+    /* sf::Sprite *s = new sf::Sprite();
     s->setTexture(texture);
 
     int xs = x*DrawHandler::scale+2;
@@ -41,4 +45,5 @@ void DrawHandler::addGO(GameObject* go, int x, int y)
     gos.s = s;
 
     objects.push_back(gos);
+     */
 }
