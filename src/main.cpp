@@ -31,13 +31,15 @@ int main()
     Scene scene(width, height, &drawer, window);
 
     //Timekeeping
-    // Should be unnecessary in SDL // sf::Clock* timer = new sf::Clock();
     unsigned int step = 16; // 16 ms per tick ~= 62.5 fps
     unsigned int currentTime = 0;
     unsigned int lastTime = 0;
     
     //TODO better initialization timing
-    while (true)
+    bool quit = false;
+    SDL_Event e;
+
+    while (!quit)
     {   // Loop that ensures updates.
         currentTime = SDL_GetTicks();
         if(currentTime < lastTime + step){
@@ -45,15 +47,19 @@ int main()
         }
         //nextStep += step; // When it is time for a new frame, "reset" the elapsed time.
         
-        /*// Magic stuff. Doesn't work wihout it.
-        sf::Event event;
-        while (window.pollEvent(event))
+        // Magic stuff. Doesn't work wihout it. //WIP : SDL-ifying
+        //Handle events on queue
+        while( SDL_PollEvent( &e ) != 0 )
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }*/
+            //User requests quit
+            if( e.type == SDL_QUIT )
+            {
+                quit = true;
+            }
+        }
         scene.update(currentTime);
-        
+        SDL_UpdateWindowSurface(window);
+
         lastTime = currentTime;
     }
     return 0;
