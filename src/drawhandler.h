@@ -5,20 +5,22 @@
 #include <list>
 #include "gameobject.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_video.h"
 
 
 class DrawHandler
 {
 public:
     void addGO(GameObject*, int, int);
-    SDL_Surface texture;
+    SDL_Surface* texture;
     DrawHandler();
     void doStuff(SDL_Window *);
 private:
     struct GOS
     {
         GameObject *g;
-        //sf::Sprite *s;
+        SDL_Rect *rect;
     };
     int scale;
     std::list<GOS> objects;

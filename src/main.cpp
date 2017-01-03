@@ -1,9 +1,14 @@
 #include "drawhandler.h"
 #include "utils.h"
 #include "scene.h"
+#include <stdio.h>
+#include <string>
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_video.h"
+#include "SDL2/SDL_image.h"
+
+//#include "SDL2/SDL_image.h"
 
 int main()
 {
@@ -14,7 +19,14 @@ int main()
     
     SDL_Window *window = nullptr;
     SDL_Surface* gScreenSurface = nullptr;
-    SDL_Init(SDL_INIT_VIDEO);
+    
+    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    {
+        printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
+        return 0;
+    }
+    std::cout << "Init ok" << std::endl;
+    
     window = SDL_CreateWindow(
         "An SDL2 window",                  // window title
         SDL_WINDOWPOS_UNDEFINED,           // initial x position
@@ -23,8 +35,14 @@ int main()
         height,                               // height, in pixels
         0
     );
-    gScreenSurface = SDL_GetWindowSurface( window);
-
+    gScreenSurface = SDL_GetWindowSurface(window);
+    IMG_Init(IMG_INIT_PNG);
+    
+    SDL_Surface* testSurface = IMG_Load("spritesheet.png"); // Loads from compiled directory.
+    if(testSurface == nullptr)
+        std::cout << "Spritesheet not so ok" << std::endl;
+        
+    SDL_BlitSurface( testSurface, NULL, gScreenSurface, NULL ); //Blits our testsurface onto the window surface 
 
     
     DrawHandler drawer;
@@ -56,10 +74,9 @@ int main()
             {
                 quit = true;
             }
+            scene.update(currentTime);
+            SDL_UpdateWindowSurface(window);
         }
-        scene.update(currentTime);
-        SDL_UpdateWindowSurface(window);
-
         lastTime = currentTime;
     }
     return 0;
