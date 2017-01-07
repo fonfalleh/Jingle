@@ -14,8 +14,6 @@ int main()
 {
     // Init
     constexpr int height = 315, width = 420;
-    // sf::RenderWindow window{sf::VideoMode(width, height), "JINGLE"};
-    // window.setFramerateLimit(framerate); //TODO Idunnolols
     
     SDL_Window *window = nullptr;
     SDL_Surface* gScreenSurface = nullptr;
@@ -28,7 +26,7 @@ int main()
     std::cout << "Init ok" << std::endl;
     
     window = SDL_CreateWindow(
-        "An SDL2 window",                  // window title
+        "Jingle!",                  // window title
         SDL_WINDOWPOS_UNDEFINED,           // initial x position
         SDL_WINDOWPOS_UNDEFINED,           // initial y position
         width,                               // width, in pixels
@@ -41,11 +39,13 @@ int main()
     SDL_Surface* testSurface = IMG_Load("spritesheet.png"); // Loads from compiled directory.
     if(testSurface == nullptr)
         std::cout << "Spritesheet not so ok" << std::endl;
+    else
+        std::cout << "Spritesheet quite ok" << std::endl;
         
     SDL_BlitSurface( testSurface, NULL, gScreenSurface, NULL ); //Blits our testsurface onto the window surface 
 
     
-    DrawHandler drawer;
+    DrawHandler drawer(window);
     Scene scene(width, height, &drawer, window);
 
     //Timekeeping
@@ -74,7 +74,7 @@ int main()
             {
                 quit = true;
             }
-            scene.update(currentTime);
+            scene.update(currentTime, &e);
             SDL_UpdateWindowSurface(window);
         }
         lastTime = currentTime;

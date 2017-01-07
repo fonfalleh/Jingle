@@ -19,7 +19,7 @@ Scene::Scene(int width, int height, DrawHandler* dhandler, SDL_Window* win)
     objs.push_back(baddy);
 }
 
-void Scene::update(const int & currentTime)
+void Scene::update(const int & currentTime, SDL_Event* e)
 {
     //Testing
     /*for(GOsIT it = objs.begin(); it != objs.end(); ++it) //TODO Iterate instead of increment?
@@ -31,7 +31,7 @@ void Scene::update(const int & currentTime)
     {
         o->update(*this);
     }
-    drawer->doStuff(window);
+    drawer->doStuff();
 /**
  // TODO: Make not-terrible collision checking. Different pools for different kinds of collisions. Bullets don't care much for bullets etc.
     for(GOsIT it = objs.begin(); it != objs.end(); ++it) //Really, really terrible collision check

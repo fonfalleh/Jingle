@@ -25,7 +25,7 @@ private:
     std::vector<int>::iterator currentElem;
 public:
     Scene(int, int, DrawHandler*, SDL_Window*);
-    void update(const int&);
+    void update(const int&, SDL_Event*);
     void fireBullet(int, int, int, int); //TODO lols
 };
 

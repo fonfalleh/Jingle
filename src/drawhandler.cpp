@@ -1,41 +1,33 @@
 #include "drawhandler.h"
 
-DrawHandler::DrawHandler()
+DrawHandler::DrawHandler(SDL_Window* w)
 {
     objects.clear();
+    window = w;
+    screen = SDL_GetWindowSurface(window);
     scale = 23;
-    texture = IMG_Load("spritesheet_t.png"); // Loads from compiled directory.
-
-    /*
-    if (!texture.loadFromFile("spritesheet_t.png"))
-        std::cout<<"NO SPRITESHEET!"<<std::endl;
-    else
-        std::cout<<"SPRITESHEET!"<<std::endl;
-    */
+    SDL_Surface * tempSurface = IMG_Load("spritesheet_t.png"); // Loads from compiled directory. Hardcoded :D
+    texture = SDL_ConvertSurface( tempSurface, screen->format, 0 );; // Loads from compiled directory.
+    SDL_FreeSurface( tempSurface);
 }
-//SPRITES ARE 21x21 w 1px border. 23x+1, 23y+1 to get sprite. //+2?
-void DrawHandler::doStuff(SDL_Window *w)
+
+void DrawHandler::doStuff()
 {
-    // Gets the active surface to draw on
-    SDL_Surface* screen = SDL_GetWindowSurface(w);
     // clears surface (fills surface with black rectangle)
-    //SDL_FillRect(screen, NULL, 0);
-    
+    SDL_FillRect(screen, NULL, 0);
+    SDL_Rect * tmp = new SDL_Rect();
     for(auto o : objects){
-        SDL_Rect * tmp = new SDL_Rect();
         tmp->x = o.g->getX();
         tmp->y = o.g->getY();
-        tmp->w = 21; // TODO LOL MAGICS
-        tmp->h = 21; // TODO LOL MAGICS
-        
-        // std::cout << "X: " << tmp->x << std::endl << "Y: " << tmp->y << std::endl << std::endl ;
-        
-        SDL_BlitSurface( //TODO fix. Black screen as of now.
+        tmp->w = DrawHandler::scale;
+        tmp->h = DrawHandler::scale;
+        SDL_BlitSurface(
             texture, //src
             o.rect, //srcrect
             screen, // dst
             tmp); //dstrect - coords of object drawn
     }
+    delete tmp; // Frees the temporary rectangle. Perhaps just make a static instead?
     
     /*
     w->clear();
@@ -51,12 +43,12 @@ void DrawHandler::doStuff(SDL_Window *w)
 }
 
 void DrawHandler::addGO(GameObject* go, int x, int y)
-{   // Magic numbers: SpriteScale: 21px, center: (10,10)
+{
     GOS gos;
 
     SDL_Rect* tmp = new SDL_Rect();
-    int xs = x*DrawHandler::scale+2;
-    int ys = y*DrawHandler::scale+2;
+    int xs = x*DrawHandler::scale+1; // 1 pixel offset "frame" in this spritesheet (Terrible practice, but oh well. Live and learn.)
+    int ys = y*DrawHandler::scale+1;
     tmp->x = xs;
     tmp->y = ys;
     tmp->w = DrawHandler::scale;
