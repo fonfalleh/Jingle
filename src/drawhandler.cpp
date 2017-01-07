@@ -4,7 +4,7 @@ DrawHandler::DrawHandler()
 {
     objects.clear();
     scale = 23;
-    texture = IMG_Load("spritesheet.png"); // Loads from compiled directory.
+    texture = IMG_Load("spritesheet_t.png"); // Loads from compiled directory.
 
     /*
     if (!texture.loadFromFile("spritesheet_t.png"))
@@ -59,8 +59,8 @@ void DrawHandler::addGO(GameObject* go, int x, int y)
     int ys = y*DrawHandler::scale+2;
     tmp->x = xs;
     tmp->y = ys;
-    tmp->x = DrawHandler::scale;
-    tmp->y = DrawHandler::scale;
+    tmp->w = DrawHandler::scale;
+    tmp->h = DrawHandler::scale;
     
     
     //s->setTextureRect(sf::IntRect(xs, ys, 21, 21));
