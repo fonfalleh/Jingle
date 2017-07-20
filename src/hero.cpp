@@ -9,7 +9,6 @@ Hero::Hero(int x, int y):
 
 void Hero::readInput(Scene& s)
 {
-    
     /*
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {

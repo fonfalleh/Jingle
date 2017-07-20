@@ -1,6 +1,7 @@
 #include "drawhandler.h"
 #include "utils.h"
 #include "scene.h"
+#include "inputhandler.h"
 #include <stdio.h>
 #include <string>
 
@@ -17,6 +18,8 @@ int main()
     
     SDL_Window *window = nullptr;
     SDL_Surface* gScreenSurface = nullptr;
+    SDL_Renderer* gRenderer = nullptr;
+    
     
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
@@ -33,6 +36,8 @@ int main()
         height,                               // height, in pixels
         0
     );
+    gRenderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
+    SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
     gScreenSurface = SDL_GetWindowSurface(window);
     IMG_Init(IMG_INIT_PNG);
     
@@ -43,7 +48,6 @@ int main()
         std::cout << "Spritesheet quite ok" << std::endl;
         
     SDL_BlitSurface( testSurface, NULL, gScreenSurface, NULL ); //Blits our testsurface onto the window surface 
-
     
     DrawHandler drawer(window);
     Scene scene(width, height, &drawer, window);
@@ -55,7 +59,8 @@ int main()
     
     //TODO better initialization timing
     bool quit = false;
-    SDL_Event e;
+    
+    InputHandler inputter;
 
     while (!quit)
     {   // Loop that ensures updates.
@@ -67,16 +72,9 @@ int main()
         
         // Magic stuff. Doesn't work wihout it. //WIP : SDL-ifying
         //Handle events on queue
-        while( SDL_PollEvent( &e ) != 0 )
-        {
-            //User requests quit
-            if( e.type == SDL_QUIT )
-            {
-                quit = true;
-            }
-            scene.update(currentTime, &e);
-            SDL_UpdateWindowSurface(window);
-        }
+        quit = inputter.update();
+        scene.update(currentTime);
+        SDL_UpdateWindowSurface(window);
         lastTime = currentTime;
     }
     return 0;

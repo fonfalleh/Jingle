@@ -7,7 +7,8 @@
 #include "bullet.h"
 #include "drawhandler.h"
 #include "utils.h"
-#include <list>
+#include "inputhandler.h"
+#include <vector>
 #include <queue>
 
 #include "SDL2/SDL.h"
@@ -17,9 +18,10 @@ class Scene
 private:
     SDL_Window* window;
     DrawHandler* drawer;
+    InputHandler inputter;
     Hero *hero;
-    std::list<GameObject*> objs;
-    std::list<Bullet*> activeBullets;
+    std::vector<GameObject*> objs;
+    std::vector<Bullet*> activeBullets;
     std::queue<Bullet*> passiveBullets;
     void addObject(GameObject& o);
     std::vector<int>::iterator currentElem;

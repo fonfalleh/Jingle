@@ -19,8 +19,10 @@ Scene::Scene(int width, int height, DrawHandler* dhandler, SDL_Window* win)
     objs.push_back(baddy);
 }
 
-void Scene::update(const int & currentTime, SDL_Event* e)
+// Update is now
+void Scene::update(const int & currentTime)
 {
+    inputter.update();
     //Testing
     /*for(GOsIT it = objs.begin(); it != objs.end(); ++it) //TODO Iterate instead of increment?
     { // Oh god why, this is terrible

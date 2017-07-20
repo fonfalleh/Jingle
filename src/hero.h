@@ -10,6 +10,8 @@ class Hero : public GameObject
 private:
     Cooldown fireCD;
     static const int fireCDFrames = 60;
+    bool currentInputs[6];
+    bool lastInputs[6];
 public:
     Hero(int x, int y);
     void move(int, int);
